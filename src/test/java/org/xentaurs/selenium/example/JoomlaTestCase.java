@@ -29,6 +29,10 @@ public class JoomlaTestCase {
     private final static String SELENIUM_BROWSER = System.getProperty("selenium.browser", "chrome");
     private final static int SLEEP = Integer.parseInt(System.getProperty("sleep", "10000"));
 
+    private String baseUrl;
+    private boolean acceptNextAlert = true;
+    private StringBuffer verificationErrors = new StringBuffer();
+
     protected WebDriver driver;
 
     @Before
