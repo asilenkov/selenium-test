@@ -2,19 +2,6 @@ package org.xentaurs.selenium.example;
 
 import java.net.URL;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import org.junit.*;
@@ -51,9 +38,8 @@ public class ExampleTest {
         throw ex;
     }
 
-
     @Test
-    public void test() throws Exception {
+    public void testUntitledTestCase() throws Exception {
       driver.get("https://joomla.xentaurs.com/");
       driver.findElement(By.linkText("Home")).click();
       driver.findElement(By.id("modlgn-username")).click();
@@ -66,15 +52,43 @@ public class ExampleTest {
       driver.findElement(By.linkText("Joomla")).click();
       driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Latest Articles'])[1]/following::span[1]")).click();
       driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='What is a Content Management System?'])[1]/following::p[2]")).click();
-   }
+    }
 
     @After
     public void tearDown() throws Exception {
-      driver.quit();
-      String verificationErrorString = verificationErrors.toString();
-      if (!"".equals(verificationErrorString)) {
-        fail(verificationErrorString);
+        if (driver != null)
+            driver.quit();
+    }
+    private boolean isElementPresent(By by) {
+      try {
+        driver.findElement(by);
+        return true;
+      } catch (NoSuchElementException e) {
+        return false;
       }
     }
-  }
+
+    private boolean isAlertPresent() {
+      try {
+        driver.switchTo().alert();
+        return true;
+      } catch (NoAlertPresentException e) {
+        return false;
+      }
+    }
+
+    private String closeAlertAndGetItsText() {
+      try {
+        Alert alert = driver.switchTo().alert();
+        String alertText = alert.getText();
+        if (acceptNextAlert) {
+          alert.accept();
+        } else {
+          alert.dismiss();
+        }
+        return alertText;
+      } finally {
+        acceptNextAlert = true;
+      }
+    }
 }
