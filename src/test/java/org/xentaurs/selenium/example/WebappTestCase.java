@@ -55,38 +55,23 @@ public class WebappTestCase {
 
     @Test
     public void WebappTestCase() throws Exception {
-
       driver.get("http://10.51.4.104/wordpress/wp-login.php");
       driver.findElement(By.id("user_login")).click();
       driver.findElement(By.id("user_login")).clear();
       driver.findElement(By.id("user_login")).sendKeys("admin");
       driver.findElement(By.id("user_pass")).clear();
       driver.findElement(By.id("user_pass")).sendKeys("admin");
-      driver.findElement(By.id("rememberme")).click();
+      driver.findElement(By.id("user_pass")).sendKeys(Keys.UP);
+      driver.findElement(By.id("user_pass")).clear();
+      driver.findElement(By.id("user_pass")).sendKeys("admin");
       driver.findElement(By.id("wp-submit")).click();
-      driver.findElement(By.linkText("Add New")).click();
+      driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Home'])[1]/following::div[5]")).click();
+      driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Posts'])[3]/following::a[1]")).click();
       driver.findElement(By.id("title")).clear();
-      driver.findElement(By.id("title")).sendKeys("Test Post");
-      driver.switchTo().frame("index=0");
-      driver.findElement(By.xpath("//html")).click();
-      driver.switchTo().frame("relative=parent");
-      driver.findElement(By.id("post-preview")).click();
-      driver.findElement(By.linkText("Edit \"Test Post\"")).click();
+      driver.findElement(By.id("title")).sendKeys("Test");
       driver.findElement(By.id("publish")).click();
-      driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Skip to toolbar'])[1]/following::div[6]")).click();
-      driver.findElement(By.linkText("All Posts")).click();
-      driver.findElement(By.linkText("Test Post")).click();
-      driver.findElement(By.linkText("test")).click();
-      driver.findElement(By.linkText("Visit Site")).click();
-      driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Skip to content'])[1]/following::img[1]")).click();
-      driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Scroll down to content'])[1]/following::h2[1]")).click();
-      driver.findElement(By.linkText("Test Post")).click();
-      driver.findElement(By.id("comment")).click();
-      driver.findElement(By.id("comment")).clear();
-      driver.findElement(By.id("comment")).sendKeys("Test Comment");
-      driver.findElement(By.id("content")).click();
-      driver.findElement(By.id("submit")).click();
-
+      driver.findElement(By.linkText("View post")).click();
+      //driver.findElement(By.id("submit")).click();
     }
 
     @After
